@@ -1,40 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { listEmployees } from './services/EmployeeService'
 
 const ListEmployeeComponent = () => {
 
-    const dummyData = [
-        {
-            id: 1,
-            firstName: "Ramesh",
-            lastName: "Fadatare",
-            email: "ramesh.fadatare@example.com",
-        },
-        {
-            id: 2,
-            firstName: "Aisha",
-            lastName: "Khan",
-            email: "aisha.khan@example.com",
-        },
-        {
-            id: 3,
-            firstName: "Daniel",
-            lastName: "Kim",
-            email: "daniel.kim@example.com",
-        },
-        {
-            id: 4,
-            firstName: "Sofia",
-            lastName: "Garcia",
-            email: "sofia.garcia@example.com",
-        },
-        {
-            id: 5,
-            firstName: "Amir",
-            lastName: "Karimov",
-            email: "amir.karimov@example.com",
-        },
-    ];
+    // const dummyData = [
+    //     {
+    //         id: 1,
+    //         firstName: "Ramesh",
+    //         lastName: "Fadatare",
+    //         email: "ramesh.fadatare@example.com",
+    //     },
+    //     {
+    //         id: 2,
+    //         firstName: "Aisha",
+    //         lastName: "Khan",
+    //         email: "aisha.khan@example.com",
+    //     },
+    //     {
+    //         id: 3,
+    //         firstName: "Daniel",
+    //         lastName: "Kim",
+    //         email: "daniel.kim@example.com",
+    //     },
+    //     {
+    //         id: 4,
+    //         firstName: "Sofia",
+    //         lastName: "Garcia",
+    //         email: "sofia.garcia@example.com",
+    //     },
+    //     {
+    //         id: 5,
+    //         firstName: "Amir",
+    //         lastName: "Karimov",
+    //         email: "amir.karimov@example.com",
+    //     },
+    // ];
 
+    const [employees, setEmployees] = useState([])
+
+
+    useEffect(() => {
+        listEmployees().then((response) => {
+            setEmployees(response.data)
+        }).catch(err => {
+            console.error(err);
+        })
+    }, [])
 
     return (
         <div>
@@ -51,7 +62,7 @@ const ListEmployeeComponent = () => {
                 </thead>
 
                 <tbody>
-                    {dummyData.map((employee) => (
+                    {employees.map((employee) => (
                         <tr key={employee.id}>
                             <td>{employee.id}</td>
                             <td>{employee.firstName}</td>
